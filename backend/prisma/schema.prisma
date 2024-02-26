@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url   = env("DATABASE_URL")
+}
+
+model Birds {
+  bird_id Int @id @default(autoincrement())
+  name          String @unique
+  species       String
+  breed         String 
+  sex           String @db.VarChar(1)
+  breeder       String
+  owner         String
+  cockParent    String
+  henParent     String
+  hatchBatch    String
+  sold          DateTime? @db.Date
+  deceased      DateTime? @db.Date
+  hatch_date    DateTime @db.Date
+  location      String
+  color         String
+  healthEvents  String[]
+  showPlacing   String @db.VarChar(3)
+  weights       Int
+  leg_tag       Weights @relation(fields: [weights], references: [weight_id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Weights {
+  weight_id     Int @id @default(autoincrement())
+  leg_tag       String @db.VarChar(4)
+  Date          DateTime @db.Date
+  Weight        Float
+  birds         Birds[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+

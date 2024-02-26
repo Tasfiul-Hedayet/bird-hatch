@@ -1,0 +1,43 @@
+.table-cover {
+    overflow-x: auto;
+    padding: 4rem 3rem 0 3rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border-bottom: 3px solid #664330;
+    padding: 10px;
+    text-align: left;
+    color: white;
+    text-align: center;
+  }
+
+  th {
+    background-color: white; 
+    color: black;
+  }
+
+  td {
+    background-color: white;
+    color: brown;
+  }
+
+  
+
+  .icon {
+    display: inline-block;
+    margin-left: 12px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .icon:hover{
+    background-color: antiquewhite;
+  }
