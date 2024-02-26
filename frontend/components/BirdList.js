@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import styles from './list.css';
 import axios from 'axios';
 import { Trash, Info, Pencil } from 'lucide-react';
-import { useRouter } from 'next/navigation'
 
 export default function BirdList({searchTerm}) {
 
@@ -23,11 +22,10 @@ export default function BirdList({searchTerm}) {
       console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // response.status(500).json({ error: 'Internal Server Error' });
     }
   };
     fetchData();
-  }, [searchTerm]);
+  }, [searchTerm, deleteBird]);
  
   useEffect(() => {
     setIsClient(true)
@@ -37,14 +35,13 @@ export default function BirdList({searchTerm}) {
     return null;
   }
 
-  const router = useRouter()
-
-  const deleteBird = async (id) => {
+  async function deleteBird(id){
     console.log(`Bird ID: ${id}`);
     try {
       const response = await axios.delete(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/${id}`);
       console.log(response);
-      location.reload();
+      // location.reload();
+      alert('Delete success')
     } catch (error) {
       console.error('Error deleting bird:', error);
     }
