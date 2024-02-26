@@ -1,0 +1,8 @@
+DATABASE_URL="postgresql://hassan47787:tQNjSJoF2d6n@ep-curly-hat-a59okso3.us-east-2.aws.neon.tech/bird-hatch?sslmode=require"
+
+CORS_ORIGIN='http://localhost:3000'
+PORT='8000'
+
+
+
+# DIRECT_URL="postgresql://hassan47787:tQNjSJoF2d6n@ep-curly-hat-a59okso3-pooler.us-east-2.aws.neon.tech/bird-hatch?sslmode=require"
