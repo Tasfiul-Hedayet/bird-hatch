@@ -79,7 +79,7 @@ function Page() {
     showPlacing, 
     sold, 
     species} = bird;
-
+//sdgfiuksdkjf
   const handleWeightChange = e => {
     setSelectedWeight(e.target.value);
   }
