@@ -6,18 +6,40 @@ import axios from "axios";
 import { data } from "autoprefixer";
 function Page() {
   const params = useParams();
+  const [isClient, setIsClient] = useState(false)
   const [valForm, setValForm] = useState({});
   const [healthEventsArr, sethealtheventsArr] = useState([]);
-  const [healtheventInput, setHealthEventInput] = useState('')
+  const [healtheventInput, setHealthEventInput] = useState('');
+  const [allWeights, setAllWeight] = useState([]);
+  const [selectedWeight, setSelectedWeight] = useState('')
+
+  useEffect(() => {
+    const fetchWeight = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/weights/getAllWeights`
+        );
+        const data = await response.data.data.allWeights;
+        setAllWeight(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchWeight();
+  }, []);
 
   useEffect(() => {
     const fetchData = async() => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/getAbird/${params.birdId}`)
         const data = response.data.data.bird;
-        setValForm(data);
-        sethealtheventsArr(data.healthEvents)
-        console.log(data);
+        setValForm((prevValForm) => {
+          console.log('Previous valForm:', prevValForm);
+          return data;
+        });
+        sethealtheventsArr(data.healthEvents);
+        setSelectedWeight(data.leg_tag.weight_id)
+        console.log('valForm:', valForm);
       } catch (error) {
         console.log(error);
       }
@@ -25,17 +47,65 @@ function Page() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log('ValForm:', valForm);
+  }, [valForm]);
+
+  const handleWeightChange = (e) => {
+    setSelectedWeight(e.target.value);
+    setValForm((prevValForm) => ({
+      ...prevValForm,
+      leg_tag: { ...prevValForm.leg_tag, leg_tag: e.target.value },
+    }));
+  };
+
+
+  const handleHealthEventInputChange = (e) => {
+    setHealthEventInput(e.target.value);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValForm({ ...valForm, [name]: value });
   };
 
-  let healthEventInput = '';
 
-  const addHealthEvent = () => {
-   
+  const addHealthEvent = (e) => {
+    e.preventDefault();
+    if (healtheventInput.trim() !== '') {
+      sethealtheventsArr((prevHealthEvents) => {
+        const updatedEvents = [...prevHealthEvents, healtheventInput.trim()];
+        console.log(updatedEvents);
+        return updatedEvents;
+      });
+      setHealthEventInput('');
+    }
   };
+
+  const clearHealthEvents = () => {
+    sethealtheventsArr([]);
+    console.log(healthEventsArr);
+  };
+
+  const {
+    breed, 
+    breeder, 
+    cockParent, 
+    color, 
+    deceased, 
+    hatchBatch, 
+    hatch_date,
+    healthEventsArray,
+    henParent, 
+    location, 
+    name, 
+    owner,
+    sex, 
+    showPlacing, 
+    sold, 
+    species} = valForm;
+
+
     const handleSubmitForm = async (e) => {
         e.preventDefault();
        
@@ -69,10 +139,18 @@ function Page() {
               'Content-Type': 'multipart/form-data',
             }
           });
-          console.log(request.data.data);  // Log the response data if needed
+          console.log(request.data.data.bird);  // Log the response data if needed
           } catch (error) {
             console.error('Error creating bird:', error);
           }
+        }
+
+        useEffect(() => {
+          setIsClient(true)
+        }, [])
+      
+        if(!isClient){
+          return null;
         }
   return (
     <>
@@ -140,8 +218,8 @@ function Page() {
           <input
             type="text"
             name="cockParent"
-            // value={valForm?.cockParent}
-            // onChange={handleInputChange}
+            value={valForm?.cockParent}
+            onChange={handleInputChange}
           />
 
           <label>Hen Parent:</label>
@@ -164,7 +242,7 @@ function Page() {
           <input
             type="date"
             name="sold"
-            value={valForm?.sold}
+            value={(valForm?.sold && valForm?.sold.split('T')[0]) || ''}
             onChange={handleInputChange}
           />
 
@@ -172,7 +250,7 @@ function Page() {
           <input
             type="date"
             name="deceased"
-            value={valForm?.deceased}
+            value={(valForm?.deceased && valForm?.deceased.split('T')[0]) || ''}
             onChange={handleInputChange}
           />
 
@@ -180,7 +258,7 @@ function Page() {
           <input
             type="date"
             name="hatch_date"
-            value={valForm?.hatch_date}
+            value={(valForm?.hatch_date && valForm?.hatch_date.split('T')[0]) || ''}
             onChange={handleInputChange}
           />
 
@@ -203,9 +281,9 @@ function Page() {
           <label>Health Event Input:</label>
           <input
             type="text"
-            name="healthEventInput"
-            value={valForm?.healthEventInput}
-            onChange={handleInputChange}
+            name="healtheventInput"
+            value={healtheventInput}
+            onChange={handleHealthEventInputChange}
           />
           <button
             className="health-add-button"
@@ -218,7 +296,7 @@ function Page() {
           <button
             className="health-add-button"
             type="button"
-            // onClick={clearhealthInput}
+            onClick={clearHealthEvents}
           >
             Clear
           </button>
@@ -233,8 +311,8 @@ function Page() {
           <input
             type="text"
             name="showPlacing"
-            // value={bird?.showPlacing}
-            // onChange={handleInputChange}
+            value={valForm?.showPlacing}
+            onChange={handleInputChange}
           />
 
 
@@ -243,19 +321,19 @@ function Page() {
           <select
             id="weight"
             name="leg_tag"
-            // value={bird?.leg_tag}
-            // onChange={handleWeightChange}
+            value={valForm?.leg_tag?.leg_tag}
+            onChange={handleWeightChange}
             required
           >
             <option value="">Leg Tag</option>
-            {/* {allWeights &&
+            {allWeights &&
               allWeights.map((weight, index) => {
                 return (
-                  <option key={weight?.weight_id} value={weight?.weight_id}>
+                  <option key={weight?.weight_id} value={weight?.leg_tag}>
                     {weight?.leg_tag}
                   </option>
                 );
-              })} */}
+              })}
           </select>
           <button className="Submit-btn" type="submit">
             Submit

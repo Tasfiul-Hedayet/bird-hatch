@@ -121,6 +121,7 @@ exports.deleteAbird = catchAsync(async(req, res, next)=>{
 })
 
 exports.updateAbird = catchAsync(async(req, res, next) => {
+    const WId = parseInt(req.body.weights_id, 10);
     const updatedBird = await prisma.birds.update({
         where: {
             bird_id: parseInt(req.params.id)
@@ -142,7 +143,7 @@ exports.updateAbird = catchAsync(async(req, res, next) => {
             color: req.body.color,
             healthEvents: req.body.healthEvents,
             showPlacing: req.body.showPlacing,
-            weights: req.body.weights_id,
+            weights: WId,
         }
     })
 

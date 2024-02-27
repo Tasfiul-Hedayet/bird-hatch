@@ -34,13 +34,7 @@ function Page() {
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // if (name === 'healthEventInput') {
-    //   setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    // } else if (name === 'healthEventsArray') {
-    //   setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    // } else {
       setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    // }
   };
 
   const addHealthEvent = () => {
