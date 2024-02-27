@@ -18,9 +18,10 @@ const UpdateWeight = () => {
         );
         const data = response.data.data.weight;
         setWeight(data)
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        alert("Error fetching data:");
+        // console.error("Error fetching data:", error);
       }
     };
     fetchWeight();
@@ -52,10 +53,10 @@ const UpdateWeight = () => {
       });
 
 
-      console.log('Success');
+      // console.log('Success');
       alert(`Weight with 'Leg Tag: ${leg_tag}' was updated!`)
     } catch (error) {
-      console.error('Error creating weight:', error);
+      // console.error('Error creating weight:', error);
       alert(error.response.data.error);
     }
   }

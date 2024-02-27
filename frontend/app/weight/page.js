@@ -33,7 +33,7 @@ function Page() {
     form.append('Weight', Weight);
     form.append('Date', Date);
 
-    console.log('Weight Form: ', ...form);
+    // console.log('Weight Form: ', ...form);
 
     try {
       const request = await axios.post(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/weights/createWeight`, form, {
@@ -43,10 +43,10 @@ function Page() {
       });
 
 
-      console.log('Success');
+      // console.log('Success');
       alert(`Weight with 'Leg Tag: ${leg_tag}' was created!`)
     } catch (error) {
-      console.error('Error creating weight:', error);
+      // console.error('Error creating weight:', error);
       alert(error.response.data.error);
     }
 

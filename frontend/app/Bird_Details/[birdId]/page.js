@@ -17,7 +17,8 @@ function Page() {
         setValForm(data);
         sethealtheventsArr(data.healthEvents)
       } catch (error) {
-        console.log(error);
+        alert(error)
+        // console.log(error);
       }
     }
     fetchData();

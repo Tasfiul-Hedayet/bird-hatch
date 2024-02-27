@@ -45,7 +45,7 @@ function Page() {
       healthEventsArray,
       healthEventInput: '',  // Clear the input field after pushing to array
     }));
-    console.log('Add button Health: ', healthEventsArray);
+    // console.log('Add button Health: ', healthEventsArray);
   };
 
   const clearhealthInput = () => {
@@ -103,17 +103,17 @@ function Page() {
     form.append('species', species);
     form.append('weights_id', Number(selectedWeight));
 
-    console.log('Bird object:', ...form);
+    // console.log('Bird object:', ...form);
     try {
       const request = await axios.post(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/createBird`, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
         }
       });
-      console.log(request.data.data);
-      // alert(`A weight was created with Leg Tag: ${}`)  
+      // console.log(request.data.data);
+      alert(`A weight was created with Leg Tag`); 
       } catch (error) {
-        console.error('Error creating bird:', error);
+      alert('Error creating bird:', error);
       }
     }
 

@@ -21,7 +21,8 @@ function Page() {
         const data = await response.data.data.allWeights;
         setAllWeight(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
+        alert("Error fetching data:");
       }
     };
     fetchWeight();
@@ -33,14 +34,15 @@ function Page() {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/getAbird/${params.birdId}`)
         const data = response.data.data.bird;
         setValForm((prevValForm) => {
-          console.log('Previous valForm:', prevValForm);
+          // console.log('Previous valForm:', prevValForm);
           return data;
         });
         sethealtheventsArr(data.healthEvents);
         setSelectedWeight(data.leg_tag.weight_id)
-        console.log('valForm:', valForm);
+        // console.log('valForm:', valForm);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        alert(error);
       }
     }
     fetchData();
