@@ -64,6 +64,7 @@ exports.getSpecificWeight = catchAsync(async(req, res, next) => {
 })
 
 exports.updateWeight = catchAsync(async(req, res, next) => {
+    const wVal = parseFloat(req.body.Weight) 
     const updatedWeight = await prisma.weights.update({
         where: {
             weight_id: parseInt(req.params.id)
@@ -71,7 +72,7 @@ exports.updateWeight = catchAsync(async(req, res, next) => {
         data: {
             leg_tag: req.body.leg_tag,
             Date: (new Date(req.body.Date)).toISOString(),
-            Weight: req.body.Weight
+            Weight: wVal
         }
     })
 

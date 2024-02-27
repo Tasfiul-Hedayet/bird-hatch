@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { data } from "autoprefixer";
 function Page() {
   const params = useParams();
   const [isClient, setIsClient] = useState(false)

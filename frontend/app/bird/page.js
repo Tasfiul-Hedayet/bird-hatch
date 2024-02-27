@@ -276,9 +276,9 @@ function Page() {
             Clear
           </button>
 
-          <div>
+          <div className="health-events-div">
             {bird.healthEventsArray.map((event, index) => (
-              <div key={index}>{event}</div>
+              <p className="events" key={index}>{event}</p>
             ))}
           </div>
 

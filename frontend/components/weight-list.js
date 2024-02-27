@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react'
 import styles from './list.css';
 import axios from 'axios';
 import { Trash, Info, Pencil } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function WeightList({searchTerm}) {
+
+  const router = useRouter();
 
   const [isClient, setIsClient] = useState(false)
 
@@ -76,7 +79,9 @@ export default function WeightList({searchTerm}) {
                 /> 
                 <Pencil 
                   size={32} 
-                  className='icon' />
+                  className='icon' 
+                  onClick={() => router.push(`/weight/${weight.weight_id}`)}
+                  />
               </td>
             </tr>
           )

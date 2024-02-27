@@ -22,7 +22,6 @@ export default function BirdList({searchTerm}) {
       const data = response.data.data.allBirds;
       const tempData = data.filter((bird) => bird.name.toLowerCase().includes(searchTerm.toLowerCase()))
       setData(tempData)
-      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
