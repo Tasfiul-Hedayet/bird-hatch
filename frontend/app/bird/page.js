@@ -34,13 +34,13 @@ function Page() {
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'healthEventInput') {
+    // if (name === 'healthEventInput') {
+    //   setBird((prevBird) => ({ ...prevBird, [name]: value }));
+    // } else if (name === 'healthEventsArray') {
+    //   setBird((prevBird) => ({ ...prevBird, [name]: value }));
+    // } else {
       setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    } else if (name === 'healthEventsArray') {
-      setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    } else {
-      setBird((prevBird) => ({ ...prevBird, [name]: value }));
-    }
+    // }
   };
 
   const addHealthEvent = () => {
@@ -116,7 +116,8 @@ function Page() {
           'Content-Type': 'multipart/form-data',
         }
       });
-      console.log(request.data.data);  // Log the response data if needed
+      console.log(request.data.data);
+      // alert(`A weight was created with Leg Tag: ${}`)  
       } catch (error) {
         console.error('Error creating bird:', error);
       }

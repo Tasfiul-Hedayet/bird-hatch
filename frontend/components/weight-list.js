@@ -4,24 +4,20 @@ import { useEffect, useState } from 'react'
 import styles from './list.css';
 import axios from 'axios';
 import { Trash, Info, Pencil } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
-export default function BirdList({searchTerm}) {
+export default function WeightList({searchTerm}) {
 
   const [isClient, setIsClient] = useState(false)
 
   const [data, setData] = useState();
 
-  const router = useRouter();
-
   useEffect(() => {
     const fetchData = async () => {
 
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/findAllBirds`);
-      const data = response.data.data.allBirds;
-      const tempData = data.filter((bird) => bird.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      setData(tempData)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/weights/getAllWeights`);
+      const data = response.data.data.allWeights;
+      setData(data)
       console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -38,15 +34,16 @@ export default function BirdList({searchTerm}) {
     return null;
   }
 
-  async function deleteBird(id){
-    console.log(`Bird ID: ${id}`);
+  async function deleteWeight(id){
+    console.log(`Weight ID: ${id}`);
     try {
-      const response = await axios.delete(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/${id}`);
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/weights/${id}`);
       console.log(response);
       location.reload();
       alert('Delete success')
     } catch (error) {
-      console.error('Error deleting bird:', error);
+      console.error('Error deleting weight: ', error);
+      alert(error.response.data.error)
     }
   }
 
@@ -55,22 +52,22 @@ export default function BirdList({searchTerm}) {
       <table>
         <tr>
           <th>Leg Tag</th>
-          <th>Name</th>
+          <th>Weight</th>
           <th>Date</th>
-          <th>Action</th>
+          <th>Actions</th>
         </tr>
-        {data && data.map((bird, index) => {
-          const dateOnly = bird.createdAt.split('T')[0];
+        {data && data.map((weight, index) => {
+          const dateOnly = weight.Date.split('T')[0];
           return (
             <tr key={index}>
-              <td>{bird.leg_tag.leg_tag}</td>
-              <td>{bird.name}</td>
+              <td>{weight.leg_tag}</td>
+              <td>{weight.Weight}</td>
               <td>{dateOnly}</td>
               <td className='action-row'>
                 <Trash
                   size={32} 
                   className='icon' 
-                  onClick={() => deleteBird(bird.bird_id)}
+                  onClick={() => deleteWeight(weight.weight_id)}
                 />
 
                 <Info 
@@ -79,9 +76,7 @@ export default function BirdList({searchTerm}) {
                 /> 
                 <Pencil 
                   size={32} 
-                  className='icon' 
-                  onClick={() => router.push(`/Bird_Tracker/${bird.bird_id}`)}
-                  />
+                  className='icon' />
               </td>
             </tr>
           )

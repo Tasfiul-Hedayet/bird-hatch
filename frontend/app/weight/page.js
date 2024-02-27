@@ -1,43 +1,56 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import WeightList from "@/components/weight-list";
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
 
 function Page() {
-  const [legTag, setLegTag] = useState(""); // legtag
-  const [date, setDate] = useState(""); // date
-  const [weight, setWeight] = useState(""); // weight
-  //   const [weightcrd, setweightCRD] = useState(""); //Object
+  
+  const initialState = {
+    leg_tag: '',
+    Date: '',
+    Weight: ''
+  }
+  
+  const [weight, setWeight] = useState(initialState);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can use the form values as needed, e.g., send them to a server or perform calculations.
-    // For simplicity, let's just log the values to the console for now.
-    console.log({
-      legTag,
-      date,
-      weight,
-    });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+      setWeight((prevForm) => ({ ...prevForm, [name]: value }));
   };
 
-  const [data, setData] = useState();
+  const { Date, Weight, leg_tag } = weight;
 
-  useEffect(() => {
-    const fetchData = async () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+
+    form.append('leg_tag', leg_tag);
+    form.append('Weight', Weight);
+    form.append('Date', Date);
+
+    console.log('Weight Form: ', ...form);
 
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/weights/getAllWeights');
-      const data =  await response.data.data;
-      console.log(data);
-      // response.status(200).json(data);
+      const request = await axios.post(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/weights/createWeight`, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+
+
+      console.log('Success');
+      alert(`Weight with 'Leg Tag: ${leg_tag}' was created!`)
     } catch (error) {
-      console.error('Error fetching data:', error);
-      // response.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error creating weight:', error);
+      alert(error.response.data.error);
     }
-  };
-    fetchData();
-  }, []);
+
+  }
 
   return (
     <>
@@ -48,26 +61,30 @@ function Page() {
           <label>Leg Tag:</label>
           <input
             type="text"
-            value={legTag}
-            onChange={(e) => setLegTag(e.target.value)}
+            name="leg_tag"
+            value={weight?.leg_tag}
+            onChange={handleInputChange}
           />
           <label>Date:</label>
           <input
             type="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            name="Date"
+            value={weight?.Date}
+            onChange={handleInputChange}
           />
 
           <label>Weight:</label>
           <input
             type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
+            name="Weight"
+            value={weight?.Weight}
+            onChange={handleInputChange}
           />
           <button className="Submit-btn" type="submit">
             Submit
           </button>
         </form>
+        <WeightList />
       </div>
     </>
   );

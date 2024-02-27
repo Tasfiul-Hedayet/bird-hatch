@@ -4,11 +4,12 @@ const AppError = require('../util/appError');
 const { weights } = require('../prisma/weights');
 
 exports.createWeight = catchAsync(async(req, res, next) => {
+    const weightVal = parseFloat(req.body.Weight);
     const newWeight = await prisma.weights.create({
         data: {
             leg_tag: req.body.leg_tag,
             Date: (new Date(req.body.Date)).toISOString(),
-            Weight: req.body.Weight
+            Weight: weightVal
         }
     })
 
@@ -106,7 +107,7 @@ exports.deleteWeight = catchAsync(async(req, res, next)=>{
     if(weight.birds.length != 0){
         res.status(400).json({
             status: 'fail',
-            error: `Delet ${weight.birds[0].name} from the birds table first and try again`
+            error: `Delete ${weight.birds[0].name} from the birds table first and try again`
         })
         return next(new AppError('The weight category cannot be deleted', 404));
     }
@@ -120,7 +121,7 @@ exports.deleteWeight = catchAsync(async(req, res, next)=>{
     res
        .status(200)
        .json({
-            status: '',
+            status: 'Success',
             data: {
                 message: `Weight category with Leg Tag: ${weight.leg_tag} has been deleted.`
             }

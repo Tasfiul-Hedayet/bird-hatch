@@ -1,10 +1,44 @@
 "use client"
 import Navbar from "@/components/Navbar";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { data } from "autoprefixer";
 function Page() {
+  const params = useParams();
+  const [valForm, setValForm] = useState({});
+  const [healthEventsArr, sethealtheventsArr] = useState([]);
+  const [healtheventInput, setHealthEventInput] = useState('')
 
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/getAbird/${params.birdId}`)
+        const data = response.data.data.bird;
+        setValForm(data);
+        sethealtheventsArr(data.healthEvents)
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValForm({ ...valForm, [name]: value });
+  };
+
+  let healthEventInput = '';
+
+  const addHealthEvent = () => {
+   
+  };
     const handleSubmitForm = async (e) => {
         e.preventDefault();
+       
     
     
         const form = new FormData();
@@ -16,7 +50,7 @@ function Page() {
         form.append('deceased', deceased);
         form.append('hatchBatch', hatchBatch);
         form.append('hatch_date', hatch_date);
-        healthEventsArray.forEach((event, index) => {
+        healthEventsArr.forEach((event, index) => {
           form.append(`healthEvents[${index}]`, event);
         });
         form.append('henParent', henParent);
@@ -30,7 +64,7 @@ function Page() {
     
         console.log('Bird object:', ...form);
         try {
-          const request = await axios.post(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/createBird`, form, {
+          const request = await axios.patch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/v1/birds/${params.birdId}`, form, {
             headers: {
               'Content-Type': 'multipart/form-data',
             }
@@ -51,30 +85,30 @@ function Page() {
             className="pr-500"
             type="text"
             name="name"
-            // value={bird?.name}
-            // onChange={handleInputChange}
+            value={valForm?.name}
+            onChange={handleInputChange}
           />
 
           <label>Species:</label>
           <input
             type="text"
             name="species"
-            // value={bird?.species}
-            // onChange={handleInputChange}
+            value={valForm?.species}
+            onChange={handleInputChange}
           />
 
           <label>Breed:</label>
           <input
             type="text"
             name="breed"
-            // value={bird?.breed}
-            // onChange={handleInputChange}
+            value={valForm?.breed}
+            onChange={handleInputChange}
           />
 
           {/* <label>Status:</label>
           <input
             type="text"
-            value={bird?.status}
+            value={valForm?.status}
             onChange={(e) => setStatus(e.target.value)}
           /> */}
 
@@ -82,31 +116,31 @@ function Page() {
           <input
             type="text"
             name="sex"
-            // value={bird?.sex}
-            // onChange={handleInputChange}
+            value={valForm?.sex}
+            onChange={handleInputChange}
           />
 
           <label>Breeder:</label>
           <input
             type="text"
             name="breeder"
-            // value={bird?.breeder}
-            // onChange={handleInputChange}
+            value={valForm?.breeder}
+            onChange={handleInputChange}
           />
 
           <label>Owner:</label>
           <input
             type="text"
             name="owner"
-            // value={bird?.owner}
-            // onChange={handleInputChange}
+            value={valForm?.owner}
+            onChange={handleInputChange}
           />
 
           <label>Cock Parent:</label>
           <input
             type="text"
             name="cockParent"
-            // value={bird?.cockParent}
+            // value={valForm?.cockParent}
             // onChange={handleInputChange}
           />
 
@@ -114,69 +148,70 @@ function Page() {
           <input
             type="text"
             name="henParent"
-            // value={bird?.henParent}
-            // onChange={handleInputChange}
+            value={valForm?.henParent}
+            onChange={handleInputChange}
           />
 
           <label>Hatch Batch:</label>
           <input
             type="text"
             name="hatchBatch"
-            // value={bird?.hatchBatch}
-            // onChange={handleInputChange}
+            value={valForm?.hatchBatch}
+            onChange={handleInputChange}
           />
 
           <label>Sold:</label>
           <input
             type="date"
             name="sold"
-            // value={bird?.sold}
-            // onChange={handleInputChange}
+            value={valForm?.sold}
+            onChange={handleInputChange}
           />
 
           <label>Deceased:</label>
           <input
             type="date"
             name="deceased"
-            // value={bird?.deceased}
-            // onChange={handleInputChange}
+            value={valForm?.deceased}
+            onChange={handleInputChange}
           />
 
           <label>HatchDate</label>
           <input
             type="date"
             name="hatch_date"
-            // value={bird?.hatch_date}
-            // onChange={handleInputChange}
+            value={valForm?.hatch_date}
+            onChange={handleInputChange}
           />
 
           <label>Location</label>
           <input
             type="text"
             name="location"
-            // value={bird?.location}
-            // onChange={handleInputChange}
+            value={valForm?.location}
+            onChange={handleInputChange}
           />
 
           <label>Color</label>
           <input
             type="text"
             name="color"
-            // value={bird?.color}
-            // onChange={handleInputChange}
+            value={valForm?.color}
+            onChange={handleInputChange}
           />
 
           <label>Health Event Input:</label>
           <input
             type="text"
             name="healthEventInput"
-            // value={bird?.healthEventInput}
-            // onChange={handleInputChange}
+            value={valForm?.healthEventInput}
+            onChange={handleInputChange}
           />
           <button
             className="health-add-button"
             type="button"
-            // onClick={addHealthEvent}
+            name="healthEventInput"
+            onClick={addHealthEvent}
           >
             Add Event
           </button>
@@ -188,11 +223,11 @@ function Page() {
             Clear
           </button>
 
-          {/* <div>
-            {bird.healthEventsArray.map((event, index) => (
+          <div>
+            {healthEventsArr.map((event, index) => (
               <div key={index}>{event}</div>
             ))}
-          </div> */}
+          </div>
 
           <label>Show Placing</label>
           <input
@@ -202,12 +237,7 @@ function Page() {
             // onChange={handleInputChange}
           />
 
-          {/* <label>Health Events:</label>
-          <input
-            type="text"
-            value={bird?.healthEvents}
-            onChange={(e) => setHealthEvents(e.target.value)}
-          /> */}
+
 
           <label>Leg Tag</label>
           <select
