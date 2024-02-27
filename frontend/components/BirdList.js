@@ -76,6 +76,7 @@ export default function BirdList({searchTerm}) {
                 <Info 
                   size={32} 
                   className='icon'
+                  onClick={() => router.push(`/Bird_Details/${bird.bird_id}`)}
                 /> 
                 <Pencil 
                   size={32} 

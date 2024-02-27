@@ -79,149 +79,56 @@ function Page() {
       <div className="body">
         <Navbar />
         <h1>Bird Details</h1>
-        <form onSubmit={handleSubmitForm}>
+        <form>
           <label>Name:</label>
-          <input
-            className="pr-500"
-            type="text"
-            name="name"
-            value={valForm?.name}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.name}</p>
 
           <label>Species:</label>
-          <input
-            type="text"
-            name="species"
-            value={valForm?.species}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.species}</p>
 
           <label>Breed:</label>
-          <input
-            type="text"
-            name="breed"
-            value={valForm?.breed}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.breed}</p>
 
           {/* <label>Status:</label>
-          <input
-            type="text"
-            value={valForm?.status}
-            onChange={(e) => setStatus(e.target.value)}
-          /> */}
+          <p>{valForm?.status}</p> */}
 
           <label>Sex:</label>
-          <input
-            type="text"
-            name="sex"
-            value={valForm?.sex}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.sex}</p>
 
           <label>Breeder:</label>
-          <input
-            type="text"
-            name="breeder"
-            value={valForm?.breeder}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.breeder}</p>
 
           <label>Owner:</label>
-          <input
-            type="text"
-            name="owner"
-            value={valForm?.owner}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.owner}</p>
 
           <label>Cock Parent:</label>
-          <input
-            type="text"
-            name="cockParent"
-            // value={valForm?.cockParent}
-            // onChange={handleInputChange}
-          />
+          <p>{valForm?.cockParent}</p>
 
           <label>Hen Parent:</label>
-          <input
-            type="text"
-            name="henParent"
-            value={valForm?.henParent}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.henParent}</p>
 
           <label>Hatch Batch:</label>
-          <input
-            type="text"
-            name="hatchBatch"
-            value={valForm?.hatchBatch}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.hatchBatch}</p>
 
-          <label>Sold:</label>
-          <input
-            type="date"
-            name="sold"
-            value={valForm?.sold}
-            onChange={handleInputChange}
-          />
+          <label>Sold Date:</label>
+          <p>{valForm?.sold}</p>
 
-          <label>Deceased:</label>
-          <input
-            type="date"
-            name="deceased"
-            value={valForm?.deceased}
-            onChange={handleInputChange}
-          />
+
+          <label>Deceased Date:</label>
+          <p>{valForm?.deceased}</p>
 
           <label>HatchDate</label>
-          <input
-            type="date"
-            name="hatch_date"
-            value={valForm?.hatch_date}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.hatch_date}</p>
 
           <label>Location</label>
-          <input
-            type="text"
-            name="location"
-            value={valForm?.location}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.location}</p>
+
 
           <label>Color</label>
-          <input
-            type="text"
-            name="color"
-            value={valForm?.color}
-            onChange={handleInputChange}
-          />
+          <p>{valForm?.color}</p>
 
           <label>Health Event Input:</label>
-          <input
-            type="text"
-            name="healthEventInput"
-            value={valForm?.healthEventInput}
-            onChange={handleInputChange}
-          />
-          <button
-            className="health-add-button"
-            type="button"
-            name="healthEventInput"
-            onClick={addHealthEvent}
-          >
-            Add Event
-          </button>
-          <button
-            className="health-add-button"
-            type="button"
-            // onClick={clearhealthInput}
-          >
-            Clear
-          </button>
+          <p>{valForm?.healthEventInput}</p>
 
           <div>
             {healthEventsArr.map((event, index) => (
@@ -230,6 +137,7 @@ function Page() {
           </div>
 
           <label>Show Placing</label>
+          <p></p>
           <input
             type="text"
             name="showPlacing"
@@ -240,6 +148,9 @@ function Page() {
 
 
           <label>Leg Tag</label>
+          <p></p>
+
+
           <select
             id="weight"
             name="leg_tag"
