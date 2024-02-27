@@ -25,7 +25,7 @@ export default function BirdList({searchTerm}) {
     }
   };
     fetchData();
-  }, [searchTerm, deleteBird]);
+  }, [searchTerm]);
  
   useEffect(() => {
     setIsClient(true)

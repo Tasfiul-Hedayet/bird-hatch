@@ -4,10 +4,8 @@ const AppError = require('../util/appError');
 
 
 exports.createNewBird = catchAsync(async(req, res, next) => {
-
     const wId = parseInt(req.body.weights_id, 10);
-    // console.log('weight typr: ', typeof wId);
-
+    // console.log('weight type: ', wId);
     const newBird = await prisma.birds.create({
         data: {
             name: req.body.name,
@@ -154,6 +152,5 @@ exports.updateAbird = catchAsync(async(req, res, next) => {
             updatedBird
         }
     });
-    
     next();
 })

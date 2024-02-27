@@ -41,9 +41,6 @@ function Navbar() {
             <li>
               <Link href="/Hatch_Tracker">Hatch</Link>
             </li>
-            <li>
-              <Link href="/bird_edit">Bird Edit</Link>
-            </li>
           </ul>
         </nav>
       </header>
