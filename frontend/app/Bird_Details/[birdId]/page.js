@@ -78,7 +78,7 @@ function Page() {
     <>
       <div className="body">
         <Navbar />
-        <h1>Bird Edit</h1>
+        <h1>Bird Details</h1>
         <form onSubmit={handleSubmitForm}>
           <label>Name:</label>
           <input
