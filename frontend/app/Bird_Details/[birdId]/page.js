@@ -83,7 +83,7 @@ function Page() {
 
           <div>
             {healthEventsArr.map((event, index) => (
-              <div key={index}>{event}</div>
+              <p className="events" key={index}>{event}</p>
             ))}
           </div>
 

@@ -72,11 +72,6 @@ export default function WeightList({searchTerm}) {
                   className='icon' 
                   onClick={() => deleteWeight(weight.weight_id)}
                 />
-
-                <Info 
-                  size={32} 
-                  className='icon'
-                /> 
                 <Pencil 
                   size={32} 
                   className='icon' 
